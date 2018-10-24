@@ -1,6 +1,8 @@
 package entities;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class Client {
     private int id;
@@ -10,15 +12,27 @@ public class Client {
     private String eMail;
     private String password;
     private ClientAdress clientAdress;
+    private List<String> roles;
 
-    public Client(int id, String name, String surname, Date dateOfBirth, String eMail){
+    public Client(int id, String name, String surname, Date dateOfBirth, String eMail, ClientAdress clientAdress){
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.dateOfBirth = dateOfBirth;
         this.eMail = eMail;
+        this.clientAdress = clientAdress;
     }
-
+    public Client(int id, String name, String surname, Date dateOfBirth, String eMail, ClientAdress clientAdress,
+                  String password, String... roles){
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.dateOfBirth = dateOfBirth;
+        this.eMail = eMail;
+        this.password = password;
+        this.clientAdress = clientAdress;
+        this.roles = Arrays.asList(roles);
+    }
     public String getName() {
         return name;
     }
@@ -73,6 +87,14 @@ public class Client {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 }
 

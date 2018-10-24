@@ -1,5 +1,7 @@
 package sequrity.bean;
 
+import entities.Client;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,14 +11,22 @@ public class UserAccount {
 
     private String userName;
     private String password;
+    private Client client;
 
     private List<String> roles;
+
+    public UserAccount(Client client){
+        this.userName = client.getName();
+        this.password = client.getPassword();
+        this.client = client;
+        this.roles = client.getRoles();
+    }
 
     public UserAccount() {
 
     }
 
-    public UserAccount(String userName, String password, String... roles) {
+    public UserAccount( String userName, String password, String... roles) {
         this.userName = userName;
         this.password = password;
 
@@ -50,5 +60,13 @@ public class UserAccount {
 
     public void setRoles(List<String> roles) {
         this.roles = roles;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }

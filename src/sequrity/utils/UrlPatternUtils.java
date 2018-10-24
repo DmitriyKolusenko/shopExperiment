@@ -16,9 +16,10 @@ public class UrlPatternUtils {
             ServletRegistration sr = map.get(servletName);
 
             Collection<String> mappings = sr.getMappings();
-            if (mappings.contains(urlPattern)) {
-                return true;
-            }
+            for (String mapping: mappings)
+                if (mapping.contains(urlPattern)) {
+                    return true;
+                }
 
         }
         return false;

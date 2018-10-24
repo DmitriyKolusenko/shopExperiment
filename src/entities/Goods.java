@@ -3,16 +3,28 @@ package entities;
 public class Goods {
     private String goodsName;
     private int price;
-    private String category;
+    private int id;
     private String parameters;
     private int weight;
     private int volume;
     private int inStock;
+    private int countSales;
 
-    public Goods(String goodsName, int price, String parameters, int weight, int volume, int inStock){
+    public Goods(int id, String goodsName, int price, String parameters, int weight, int volume, int inStock, int countSales){
         this.goodsName = goodsName;
         this.price = price;
-//        this.category = category;
+        this.id = id;
+        this.parameters = parameters;
+        this.weight = weight;
+        this.volume = volume;
+        this.inStock = inStock;
+        this.countSales = countSales;
+    }
+
+    public Goods(int id, String goodsName, int price, String parameters, int weight, int volume, int inStock){
+        this.goodsName = goodsName;
+        this.price = price;
+        this.id = id;
         this.parameters = parameters;
         this.weight = weight;
         this.volume = volume;
@@ -33,14 +45,6 @@ public class Goods {
 
     public void setPrice(int price) {
         this.price = price;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public String getParameters() {
@@ -73,5 +77,21 @@ public class Goods {
 
     public void setInStock(int inStock) {
         this.inStock = inStock;
+    }
+
+    public int getCountSales() {
+        return countSales;
+    }
+
+    public void setCountSales(int countSales) {
+        this.countSales = countSales;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

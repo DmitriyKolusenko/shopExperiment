@@ -15,6 +15,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -38,9 +39,20 @@ public class SecurityFilter implements Filter {
 
         // User information stored in the Session.
         // (After successful login).
-        UserAccount loginedUser = AppUtils.getLoginedUser(request.getSession());
+        HttpSession session = request.getSession(false);
 
-        if (servletPath.equals("/login")) {
+        if (session == null) {
+            session = request.getSession();
+        }
+
+        UserAccount loginedUser = AppUtils.getLoginedUser(session);
+
+        //===================
+        if (loginedUser == null){
+            loginedUser = AppUtils.getLoginedUser(request.getParameter("sessionId"));//
+        }
+        //====================
+        if (servletPath.contains("/login")) { //было equals....
             chain.doFilter(request, response);
             return;
         }

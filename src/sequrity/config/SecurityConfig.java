@@ -20,16 +20,17 @@ public class SecurityConfig {
         // Configure For "EMPLOYEE" Role.
         List<String> urlPatterns1 = new ArrayList<String>();
 
-        urlPatterns1.add("/goods");
-
+//        urlPatterns1.add("/goods");
+        urlPatterns1.add("/orders");
 
         mapConfig.put(ROLE_EMPLOYEE, urlPatterns1);
 
         // Configure For "MANAGER" Role.
         List<String> urlPatterns2 = new ArrayList<String>();
 
-        urlPatterns2.add("/goods");
+//        urlPatterns2.add("/goods");
         urlPatterns2.add("/clients");
+        urlPatterns2.add("/orders");
 
         mapConfig.put(ROLE_MANAGER, urlPatterns2);
     }

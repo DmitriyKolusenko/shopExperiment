@@ -1,7 +1,11 @@
 package dataweb;
 
 import connection.RequestManager;
+import entities.Client;
+import sequrity.bean.UserAccount;
+import sequrity.utils.AppUtils;
 import utils.JsonHelper;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,29 +15,28 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.sql.SQLException;
 
-
-@WebServlet(name = "GoodsServlet", urlPatterns = {"/goods/*"})
-public class GoodsServlet extends HttpServlet {
+@WebServlet (name = "ClientOrders", urlPatterns = {"/orders/*"})
+public class ClientOrders extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset = UTF-8");
         response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
-        String stringId = request.getParameter("id");
-        System.out.println("products is requested");
+        String sessionId = request.getParameter("sessionId");
+        Client client = AppUtils.getLoginedUser(sessionId).getClient();
         try (OutputStreamWriter writer = new OutputStreamWriter(response.getOutputStream(), "UTF-8")){
-            if (stringId == null){
-                String string = JsonHelper.toJSONgoods(RequestManager.getGoodsList().getGoodsList()).toString();
+            try {
+                String string = JsonHelper.toJSONclientOrders(RequestManager.getClientOrders(client)).toString();
                 string = string.replaceAll("\"[0-9]+\":","");
                 string = "[" + string.substring(1,string.length()-1) + "]";
+                string = string.replaceAll("\"goods\":[^0-9]","\"goods\":[");
+                string = string.replaceAll("}}","}]");
+                System.out.println(string);
                 writer.write(string);
-            } else {
-                int id = Integer.parseInt(stringId);
-                JsonHelper.toJSONproduct(RequestManager.getProduct(id)).writeJSONString(writer);
+            } catch (SQLException e1) {
+                e1.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 }

@@ -16,8 +16,11 @@ public class SecurityUtils {
 
         for (String role : roles) {
             List<String> urlPatterns = SecurityConfig.getUrlPatternsForRole(role);
-            if (urlPatterns != null && urlPatterns.contains(urlPattern)) {
-                return true;
+            if (urlPatterns != null){
+                for (String urlPatternsPattern: urlPatterns)
+                    if (urlPattern.contains(urlPatternsPattern)) {
+                        return true;
+                    }
             }
         }
         return false;
@@ -34,8 +37,11 @@ public class SecurityUtils {
                 continue;
             }
             List<String> urlPatterns = SecurityConfig.getUrlPatternsForRole(role);
-            if (urlPatterns != null && urlPatterns.contains(urlPattern)) {
-                return true;
+            if (urlPatterns != null)
+                for (String urlPatternsPattern: urlPatterns){
+                    if ( urlPattern.contains(urlPatternsPattern)) {
+                        return true;
+                }
             }
         }
         return false;
